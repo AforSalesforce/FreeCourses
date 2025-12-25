@@ -1,6 +1,6 @@
 # FreeCourseHub - Premium Online Course Aggregator
 
-FreeCourseHub is a modern, high-performance course aggregator built with Next.js 15, designed to solve the "paradox of choice" in online education. It aggregates, filters, and curates free courses from providers like Coursera, Harvard, and YouTube, presenting them in a premium, distraction-free interface.
+FreeCourseHub is a modern, high-performance course aggregator built with Next.js 16, designed to solve the "paradox of choice" in online education. It aggregates, filters, and curates free courses from providers like Coursera, Harvard, and YouTube, presenting them in a premium, distraction-free interface.
 
 **Live Demo:** [https://onlinefreecourses.vercel.app](https://onlinefreecourses.vercel.app)
 
@@ -22,12 +22,37 @@ This project was executed in three strategic phases to ensure scalability, SEO d
 *   **Long-Tail pSEO**: Deep directory structure `/courses/[category]/[topic]` (e.g., `/courses/Computer Science/Python`) to capture high-intent search traffic.
     *   Built using `generateStaticParams` to pre-render 38+ unique topic paths at build time.
 *   **Content Hub (Blog)**: A fully functional markdown-based blog system (`/blog`) with Schema markup to build topical authority.
+*   **Learning Paths**: A dedicated section (`/paths`) offering curated roadmaps for careers (Step-by-step guides for "Full Stack Dev", "Data Scientist", etc.).
 
 ### Phase 3: Community & Retention
 *   **Gamification**: A client-side "Daily Streak" counter in the Navbar, using `localStorage` to boost user stickiness without requiring login.
 *   **User Favorites**: "Save to Favorites" functionality allows users to curate their own lists immediately.
 *   **Lead Capture**: High-conversion Newsletter component with "roadmap" lead magnet logic.
 *   **Premium UI**: Integrated `shadcn/ui` (Tooltip, Badge, Card) and `lucide-react` for a polished, trustworthy aesthetic.
+
+## 🕹 Application Walkthrough
+
+### 1. **Discovery & Search**
+The homepage acts as a command center for learners.
+- **Hero Search**: Instant, debounced search across all courses and categories.
+- **Category Grid**: Visually rich cards for top domains like 'Computer Science', 'Business', and 'Design'.
+
+### 2. **Course Catalog** (`/categories`)
+A powerful filtering engine to find the perfect resource.
+- **Smart Filters**: Drill down by specific providers (e.g., "MIT OpenCourseWare", "Google Cloud"), difficulty level, or language.
+- **Dynamic Sorting**: Toggle between "Most Popular" for social proof or "Newest" for fresh content.
+- **Instant Previews**: Hover over course cards to see key stats like duration and provider without clicking.
+
+### 3. **Curated Learning Paths** (`/paths`)
+We don't just list courses; we guide users on **how** to take them.
+- **Career Tracks**: "Zero to Hero" roadmaps for roles like *Full Stack Developer* or *UX Designer*, complete with estimated timelines (e.g., "6 Months").
+- **Academic Roadmaps**: Special guides formatted for students (e.g., "B.Tech First Year", "High School Foundation").
+- **Progress Tracking**: Visual checklists for each step in a path.
+
+### 4. **Blog & Guides** (`/blog`)
+Educational content to support the courses.
+- **Deep Dives**: Articles on "Best Free Python Resources" or "How to Start with AI".
+- **SEO Optimized**: Each post is automatically optimized for search engines to drive organic traffic.
 
 ## 🛠 Tech Stack
 
@@ -48,6 +73,8 @@ src/
 │   ├── courses/            # Programmatic SEO Routes
 │   │   └── [category]/     # Level 2: Category Pages
 │   │       └── [topic]/    # Level 3: Topic Pages
+│   ├── guides/             # Specific technical guides (Engineering/Hosting)
+│   ├── paths/              # Learning Paths & Roadmaps page
 │   ├── layout.tsx          # Root layout with Navbar & Nuqs adapter
 │   └── page.tsx            # Homepage with Hero, Grid, & Newsletter
 ├── components/
