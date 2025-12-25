@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FreeCourseHub - Premium Online Course Aggregator
 
-## Getting Started
+FreeCourseHub is a modern, high-performance course aggregator built with Next.js 15, designed to solve the "paradox of choice" in online education. It aggregates, filters, and curates free courses from providers like Coursera, Harvard, and YouTube, presenting them in a premium, distraction-free interface.
 
-First, run the development server:
+**Live Demo:** [https://onlinefreecourses.vercel.app](https://onlinefreecourses.vercel.app)
+
+## 🚀 Features & Architecture
+
+This project was executed in three strategic phases to ensure scalability, SEO dominance, and user retention.
+
+### Phase 1: Foundation & Technical SEO
+*   **Next.js App Router**: Utilizing the latest React Server Components architecture.
+*   **Incremental Static Regeneration (ISR)**: Pages like `/` and `/categories` revalidate every hour (`revalidate = 3600`), ensuring 100/100 Core Web Vitals while keeping data fresh.
+*   **Programmatic SEO (pSEO)**:
+    *   Dynamic Routes: `/courses/[category]` generates landing pages for every category (e.g., Computer Science, Design).
+    *   Automated Metadata: Dynamic `title` and `canonical` tags for every generated page.
+*   **Schema.org Structured Data**: Automatic injection of `ItemList` and `Course` JSON-LD to trigger Rich Snippets in Google Search.
+*   **Performance**: `next/image` with explicit `sizes` logic to minimize LCP (Largest Contentful Paint).
+
+### Phase 2: Growth & Monetization
+*   **Monetization Logic**: Centralized type definition supporting `affiliateUrl`. The UI preferentially renders affiliate links over direct source links when available.
+*   **Long-Tail pSEO**: Deep directory structure `/courses/[category]/[topic]` (e.g., `/courses/Computer Science/Python`) to capture high-intent search traffic.
+    *   Built using `generateStaticParams` to pre-render 38+ unique topic paths at build time.
+*   **Content Hub (Blog)**: A fully functional markdown-based blog system (`/blog`) with Schema markup to build topical authority.
+
+### Phase 3: Community & Retention
+*   **Gamification**: A client-side "Daily Streak" counter in the Navbar, using `localStorage` to boost user stickiness without requiring login.
+*   **User Favorites**: "Save to Favorites" functionality allows users to curate their own lists immediately.
+*   **Lead Capture**: High-conversion Newsletter component with "roadmap" lead magnet logic.
+*   **Premium UI**: Integrated `shadcn/ui` (Tooltip, Badge, Card) and `lucide-react` for a polished, trustworthy aesthetic.
+
+## 🛠 Tech Stack
+
+*   **Framework**: Next.js 16 (App Router, Turbopack)
+*   **Styling**: Tailwind CSS v4, CSS Variables
+*   **Icons**: Lucide React
+*   **State Management**: Nuqs (URL-based state management for shareable filters)
+*   **Components**: Shadcn/UI (Radix Primitives)
+*   **Deployment**: Vercel (Edge Network)
+
+## 📂 Project Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+src/
+├── app/
+│   ├── blog/               # Blog system (Index & Individual Posts)
+│   ├── categories/         # Category browse page
+│   ├── courses/            # Programmatic SEO Routes
+│   │   └── [category]/     # Level 2: Category Pages
+│   │       └── [topic]/    # Level 3: Topic Pages
+│   ├── layout.tsx          # Root layout with Navbar & Nuqs adapter
+│   └── page.tsx            # Homepage with Hero, Grid, & Newsletter
+├── components/
+│   ├── course/             # CourseCard, CourseGrid
+│   ├── features/           # StreakCounter, NewsletterSection
+│   ├── layout/             # Navbar, FilterSidebar
+│   └── ui/                 # Reusable UI atoms (Button, Badge, etc.)
+├── lib/
+│   ├── data.ts             # Static database of courses
+│   ├── blog-data.ts        # Static database of blog posts
+│   └── user-utils.ts       # LocalStorage logic for streaks/favorites
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏃‍♂️ Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/AforSalesforce/FreeCourses.git
+    cd FreeCourses
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-## Learn More
+3.  **Run development server**
+    ```bash
+    npm run dev
+    ```
+    Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-To learn more about Next.js, take a look at the following resources:
+4.  **Build for production**
+    ```bash
+    npm run build
+    ```
+    This will generate the static HTML for all programmatic routes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📈 SEO Strategy implemented
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+*   **Silo Architecture**: Homepage -> Categories -> Topics.
+*   **JSON-LD**: Validated `Course`, `ItemList`, and `BlogPosting` schemas on all relevant pages.
+*   **Semantic HTML**: Proper `h1` > `h2` hierarchy and accessible landmarks.
 
-## Deploy on Vercel
+## 🔮 Future Roadmap
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*   [ ] **Auth**: Integrate NextAuth.js for cross-device syncing of favorites.
+*   [ ] **API**: Replace static data with a CMS (Sanity or Strapi).
+*   [ ] **AI Search**: Implement semantic vector search for "natural language" course discovery.
