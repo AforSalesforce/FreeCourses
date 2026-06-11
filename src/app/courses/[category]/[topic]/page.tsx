@@ -51,7 +51,7 @@ export default async function TopicPage({ params }: Props) {
     const decodedTopic = decodeURIComponent(topic);
 
     // Validate
-    if (!courseCategories.includes(decodedCategory)) {
+    if (!courseCategories.includes(decodedCategory as never)) {
         return notFound();
     }
 

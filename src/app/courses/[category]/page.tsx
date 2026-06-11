@@ -36,7 +36,7 @@ export default async function CategoryPage({ params }: Props) {
     const decodedCategory = decodeURIComponent(category);
 
     // Validate category
-    if (!courseCategories.includes(decodedCategory)) {
+    if (!courseCategories.includes(decodedCategory as never)) {
         return notFound();
     }
 

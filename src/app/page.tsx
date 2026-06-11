@@ -32,9 +32,11 @@ export default function Home() {
             Curated from top universities and creators. No paywalls, no hidden fees. Just pure learning.
           </p>
 
-          <div className="flex items-center justify-center gap-4">
-            <Button size="lg" className="h-12 px-8 text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all hover:scale-105">
-              Explore Courses <ArrowRight className="ml-2 h-4 w-4" />
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button size="lg" className="h-12 px-8 text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all hover:scale-105" asChild>
+              <a href="#courses">
+                Explore Courses <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
             </Button>
             <Button size="lg" variant="outline" className="h-12 px-8 text-base bg-background/50 backdrop-blur-sm hover:bg-background/80" asChild>
               <Link href="/guides/engineering">
@@ -86,7 +88,7 @@ export default function Home() {
       </section>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 pb-20 pt-16">
+      <div id="courses" className="container mx-auto px-4 pb-20 pt-16 scroll-mt-20">
         <div className="flex flex-col md:flex-row gap-8">
           <Suspense fallback={<div className="w-64 shrink-0 h-screen bg-muted animate-pulse" />}>
             <FilterSidebar />
@@ -119,12 +121,9 @@ export default function Home() {
                   '@type': 'Organization',
                   name: course.provider,
                 },
-                url: course.sourceUrl,
+                url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://freecoursehub.vercel.app'}/course/${course.id}`,
                 image: course.thumbnail,
-                aggregateRating: {
-                  '@type': 'AggregateRating',
-                  ratingValue: course.rating,
-                },
+                isAccessibleForFree: true,
               },
             })),
           }),

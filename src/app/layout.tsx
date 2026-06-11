@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,11 +15,36 @@ const geistMono = Geist_Mono({
 });
 
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { siteUrl, siteName } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "FreeCourseHub | Premium Free Education",
-  description: "Discover the best free online courses from YouTube, Coursera, Universities, and more. Curated high-quality content for your learning journey.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "FreeCourseHub | Best Free Online Courses",
+    template: `%s | ${siteName}`,
+  },
+  description: "Discover the best free online courses from Harvard, MIT, Coursera, freeCodeCamp, and more. Curated high-quality content for students and professionals.",
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    siteName,
+    title: "FreeCourseHub | Best Free Online Courses",
+    description: "Curated free courses from top universities and creators. No paywalls, no hidden fees.",
+    url: siteUrl,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "FreeCourseHub | Best Free Online Courses",
+    description: "Curated free courses from top universities and creators. No paywalls, no hidden fees.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -38,7 +64,9 @@ export default function RootLayout({
           <main className="flex-1 w-full bg-background/50">
             {children}
           </main>
+          <Footer />
         </NuqsAdapter>
+        <Analytics />
       </body>
     </html>
   );
